@@ -1,0 +1,25 @@
+name: site
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: nginx:latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ls -la
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@master
+        continue-on-error: true
+        with:
+          args: --offline index.html
+      - uses: peaceiris/actions-gh-pages@v3
+        if: false
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
